@@ -1,0 +1,12 @@
+﻿@model ShoppingCart.Application.ViewModels.CommentViewModel
+
+@{ ViewData["Title"] = "Add Comment"; }
+
+<h1>Add Comment</h1>
+<hr />
+<form asp-action="Create" class="jumbotron p-4" type="post">
+	<input type="hidden" name="submissionId" value="@ViewBag.submissionId"/>
+	<input asp-for="@Model.Message" placholder="Comment" type="text" class="form-control" />
+	<br/>
+	<input type="submit" value="Submit" class="btn btn-primary" />
+</form>

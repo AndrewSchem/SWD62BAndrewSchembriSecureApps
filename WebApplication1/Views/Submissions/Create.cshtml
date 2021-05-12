@@ -1,0 +1,20 @@
+﻿@model ShoppingCart.Application.ViewModels.SubmissionViewModel
+
+@{ ViewData["Title"] = "Create"; }
+
+<h1>Create Task</h1>
+<hr />
+<div class="jumbotron p-4">
+	<form asp-action="Create" method="post" enctype="multipart/form-data">
+		@Html.AntiForgeryToken()
+		<h4>Add Task</h4>
+		<hr />
+		<input type="file" name="file" class="form-control" />
+		<br />
+		<input type="submit" value="Submit" class="btn btn-primary" />
+	</form>
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

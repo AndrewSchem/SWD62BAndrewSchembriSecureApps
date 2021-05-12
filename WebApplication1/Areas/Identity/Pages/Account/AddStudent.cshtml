@@ -1,0 +1,34 @@
+﻿@page
+@model AddStudent
+@{
+    ViewData["Title"] = "Add Student";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row jumbotron p-4">
+    <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="w-100">
+        <h4>Create a new account.</h4>
+        <hr />
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group">
+            <input asp-for="Input.FirstName" placeholder="First Name" class="form-control w-25" />
+            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="Input.LastName" placeholder="Last Name" class="form-control w-25" />
+            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Input.Email" placeholder="Email" class="form-control w-25" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Student</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

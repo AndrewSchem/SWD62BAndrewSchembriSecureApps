@@ -1,0 +1,20 @@
+﻿@using WebApplication1.Utility;
+@model IEnumerable<ShoppingCart.Application.ViewModels.SubmissionViewModel>
+
+@{ ViewData["Title"] = "Submissions"; }
+
+<h1>Submitted Tasks</h1>
+<hr />
+
+@foreach (var item in Model)
+{
+	<div class="alert alert-success">
+		<h4>@item.Task.TaskName | @item.UploaderEmail</h4>
+		<p><b>Date Submitted: </b> @item.DateUploaded</p>
+		@Html.ActionLink("View", "Details", new
+	   {
+		   taskId = Encryption.SymmetricEncrypt(item.TaskId.ToString()),
+		   email = Encryption.SymmetricEncrypt(item.UploaderEmail.ToString()),
+	   })
+	</div>
+}

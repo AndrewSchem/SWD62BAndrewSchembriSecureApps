@@ -1,0 +1,52 @@
+﻿@using WebApplication1.Utility;
+@using Castle.Core.Internal;
+@model ShoppingCart.Application.ViewModels.SubmissionViewModel
+
+@{ ViewData["Title"] = "Details"; }
+
+@if (Model != null)
+{
+	<h1>Submitted Tasks</h1>
+	<hr />
+	<div class="jumbotron p-4">
+		<h4>@Model.Task.TaskName | @Model.UploaderEmail</h4>
+		<p><b>Date Submitted: </b> @Model.DateUploaded</p>
+		<p class="text-danger" hidden="@ViewBag.Copied">Student is Copying!</p>
+		@Html.ActionLink("Download", "Download", new
+		{
+			submissionId = Encryption.SymmetricEncrypt(Model.Id.ToString())
+		})
+	</div>
+	<br />
+	<h2>Comments</h2>
+	<hr />
+	@Html.ActionLink("Add Comment", "Create", "Comments", new
+	{
+		submissionId = Encryption.SymmetricEncrypt(Model.Id.ToString())
+	})
+
+	<br/>
+
+	foreach (var c in Model.Comments) {
+		<div class="jumbotron p-4 mt-2">
+			<p>@c.Message // @c.Email</p>
+		</div>
+	}
+}
+else
+{
+
+<form asp-action="Details" method="post" class="jumbotron p-4" enctype="multipart/form-data">
+	@Html.AntiForgeryToken()
+	<h4>Submit Task</h4>
+	<hr />
+	<input type="hidden" name="taskId" value="@ViewBag.taskId" />
+	<input type="file" name="file" class="form-control" />
+	<br />
+	<input type="submit" value="Submit" class="btn btn-primary" />
+</form>
+
+	@section Scripts {
+		@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	}
+}

@@ -1,0 +1,60 @@
+﻿@using WebApplication1.Utility;
+@model IEnumerable<ShoppingCart.Application.ViewModels.TaskViewModel>
+
+@{ ViewData["Title"] = "Index"; }
+
+<h1>Tasks</h1>
+
+<hr />
+
+@foreach (var item in Model)
+{
+@if (item.Deadline >= DateTime.Now)
+{
+<div class="alert alert-primary">
+	<h4><b>@Html.DisplayNameFor(model => model.TaskName) :</b> @Html.DisplayFor(modelItem => item.TaskName) | <b>@Html.DisplayNameFor(model => model.TeacherEmail) :</b> @Html.DisplayFor(modelItem => item.TeacherEmail)</h4>
+	<br />
+	<b>@Html.DisplayNameFor(model => model.Deadline) :</b> @Html.DisplayFor(modelItem => item.Deadline)
+	<br /><br />
+	@if (User.IsInRole("Student"))
+	{
+		@if (item.Deadline >= DateTime.Now)
+		{
+			@Html.ActionLink("Details", "Details", "Submissions", new
+	   {
+		   taskId = Encryption.SymmetricEncrypt(item.Id.ToString()),
+		   email = Encryption.SymmetricEncrypt(User.Identity.Name.ToString())
+	   }) 
+		}
+		else
+		{
+			<button class="btn btn-danger">Over Deadline</button>
+		}
+	}
+</div>
+}
+else {
+	<div class="alert alert-danger">
+	<h4><b>@Html.DisplayNameFor(model => model.TaskName) :</b> @Html.DisplayFor(modelItem => item.TaskName) | <b>@Html.DisplayNameFor(model => model.TeacherEmail) :</b> @Html.DisplayFor(modelItem => item.TeacherEmail)</h4>
+	<br />
+	<b>@Html.DisplayNameFor(model => model.Deadline) :</b> @Html.DisplayFor(modelItem => item.Deadline)
+	<br /><br />
+	@if (User.IsInRole("Student"))
+	{
+		@if (item.Deadline >= DateTime.Now)
+		{
+			@Html.ActionLink("Details", "Details", "Submissions", new
+	   {
+		   taskId = Encryption.SymmetricEncrypt(item.Id.ToString()),
+		   email = Encryption.SymmetricEncrypt(User.Identity.Name.ToString())
+	   }) 
+		}
+		else
+		{
+			<button class="btn btn-danger">Over Deadline</button>
+		}
+	}
+</div>
+}
+
+}
